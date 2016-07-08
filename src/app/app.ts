@@ -1,6 +1,12 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 
-import {SwingStackComponent, SwingCardComponent} from 'angular2-swing';
+import {
+  Stack,
+  Card,
+  ThrowEvent,
+  DragEvent,
+  SwingStackComponent,
+  SwingCardComponent} from 'angular2-swing';
 
 @Component({
   selector: 'app',
@@ -8,7 +14,7 @@ import {SwingStackComponent, SwingCardComponent} from 'angular2-swing';
   template: `
     <div id="viewport">
       <ul class="stack" swing-stack #myswing1 (throwout)="onThrowOut($event)">
-        <li swing-card [ngClass]="c.name" *ngFor="let c of cards">{{ c.symbol }}</li>
+        <li swing-card #mycards1 [ngClass]="c.name" *ngFor="let c of cards">{{ c.symbol }}</li>
       </ul>
     </div>
     <div id="source">
@@ -27,6 +33,7 @@ import {SwingStackComponent, SwingCardComponent} from 'angular2-swing';
 export class App {
 
   @ViewChild('myswing1') swingStack: SwingStackComponent;
+  @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
 
   cards: Array<any>;
 
@@ -39,19 +46,32 @@ export class App {
     ];
   }
 
-  ngOnInit() {
-    // the swingStack will be set in ngOnInit and
-    // is not available in the ctor so we will hook up
-    // the events from here
+  ngAfterViewInit() {
+    // ViewChild & ViewChildren are only available
+    // in this function
+
+    console.log(this.swingStack); // this is the stack
+    console.log(this.swingCards); // this is a list of cards
+
+    // we can get the underlying stack
+    // which has methods - createCard, destroyCard, getCard etc
+    console.log(this.swingStack.stack);
+
+    // and the cards
+    // every card has methods - destroy, throwIn, throwOut etc
+    this.swingCards.forEach((c) => console.log(c.getCard()));
 
     // this is how you can manually hook up to the
     // events instead of providing the event method in the template
-    this.swingStack.throwoutleft.subscribe((event: any) => console.log('Manual hook: ', event));
+    this.swingStack.throwoutleft.subscribe(
+      (event: ThrowEvent) => console.log('Manual hook: ', event));
+
+    this.swingStack.dragstart.subscribe((event: DragEvent) => console.log(event));
   }
 
   // This method is called by hooking up the event
   // on the HTML element - see the template above
-  onThrowOut($event: any) {
-    console.log('Hook from the template', $event);
+  onThrowOut(event: ThrowEvent) {
+    console.log('Hook from the template', event.throwDirection);
   }
 }
