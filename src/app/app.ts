@@ -78,6 +78,8 @@ export class App {
       (event: ThrowEvent) => console.log('Manual hook: ', event));
 
     this.swingStack.dragstart.subscribe((event: DragEvent) => console.log(event));
+
+    this.swingStack.dragmove.subscribe((event: DragEvent) => console.log(event));
   }
 
   // This method is called by hooking up the event
