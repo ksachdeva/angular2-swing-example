@@ -1,6 +1,7 @@
 import {Component, ViewChild, ViewChildren, QueryList} from '@angular/core';
 
 import {
+  StackConfig,
   Stack,
   Card,
   ThrowEvent,
@@ -13,7 +14,7 @@ import {
   directives: [SwingStackComponent, SwingCardComponent],
   template: `
     <div id="viewport">
-      <ul class="stack" swing-stack #myswing1 (throwout)="onThrowOut($event)">
+      <ul class="stack" swing-stack [stackConfig]="stackConfig" #myswing1 (throwout)="onThrowOut($event)">
         <li swing-card #mycards1 [ngClass]="c.name" *ngFor="let c of cards">{{ c.symbol }}</li>
       </ul>
     </div>
@@ -36,8 +37,18 @@ export class App {
   @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
 
   cards: Array<any>;
+  stackConfig: StackConfig;
 
   constructor() {
+
+    this.stackConfig = {
+      throwOutConfidence: (offset: number, targetElement: HTMLElement) => {
+        // you would put ur logic based on offset & targetelement to determine
+        // what is your throwout confidence
+        return 1;
+      },
+      minThrowOutDistance: 700    // default value is 400
+    };
 
     this.cards = [
       { name: 'clubs', symbol: '♣' },
