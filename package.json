@@ -14,33 +14,40 @@
         "typings": "typings"
     },
     "dependencies": {
-        "@angular/common": "2.0.0-rc.4",
-        "@angular/compiler": "2.0.0-rc.4",
-        "@angular/core": "2.0.0-rc.4",
-        "@angular/http": "2.0.0-rc.4",
-        "@angular/platform-browser": "2.0.0-rc.4",
-        "@angular/platform-browser-dynamic": "2.0.0-rc.4",
-        "angular2-swing": "^0.8.0",
-        "es6-shim": "^0.35.1",
+        "@angular/common": "2.0.0",
+        "@angular/compiler": "2.0.0",
+        "@angular/core": "2.0.0",
+        "@angular/forms": "2.0.0",
+        "@angular/http": "2.0.0",
+        "@angular/platform-browser": "2.0.0",
+        "@angular/platform-browser-dynamic": "2.0.0",
+        "@angular/router": "3.0.0",
+
+        "angular2-swing": "^0.9.1",
+
         "hammerjs": "^2.0.8",
         "lodash": "^4.13.1",
         "raf": "^3.2.0",
         "rebound": "0.0.13",
-        "reflect-metadata": "^0.1.3",
-        "rxjs": "5.0.0-beta.6",
+
         "sister": "^3.0.0",
         "swing": "^3.0.3",
-        "systemjs": "0.19.27",
         "vendor-prefix": "^0.1.0",
-        "zone.js": "^0.6.12"
+
+        "systemjs": "0.19.27",
+        "core-js": "^2.4.1",
+        "reflect-metadata": "^0.1.3",
+        "rxjs": "5.0.0-beta.12",
+        "zone.js": "^0.6.23"
+
     },
     "devDependencies": {
         "concurrently": "^2.0.0",
         "lite-server": "^2.2.0",
         "typescript": "1.8.10",
         "typings": "^1.0.4",
-        "systemjs-builder": "^0.15.23",
-        "yargs": "^4.7.1"
+        "systemjs-builder": "^0.15.26",
+        "yargs": "^4.8.1"
     },
     "author": "Kapil Sachdeva",
     "license": "MIT"
