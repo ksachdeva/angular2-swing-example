@@ -27,7 +27,7 @@ export class AppComponent {
       throwOutConfidence: (offset: number, targetElement: HTMLElement) => {
         // you would put ur logic based on offset & targetelement to determine
         // what is your throwout confidence
-        return 1;
+        return Math.min(Math.abs(offset) / targetElement.offsetWidth, 1);
       },
       minThrowOutDistance: 900    // default value is 400
     };
