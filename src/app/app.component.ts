@@ -6,6 +6,7 @@ import {
   Card,
   ThrowEvent,
   DragEvent,
+  Direction,
   SwingStackComponent,
   SwingCardComponent} from 'angular2-swing';
 
@@ -24,12 +25,19 @@ export class AppComponent {
   constructor() {
 
     this.stackConfig = {
-      throwOutConfidence: (offset: number, targetElement: HTMLElement) => {
+      allowedDirections: [
+        Direction.LEFT,
+        Direction.DOWN
+      ],
+      throwOutConfidence: (offsetX: number, offsetY: number, targetElement: HTMLElement) => {
         // you would put ur logic based on offset & targetelement to determine
         // what is your throwout confidence
-        return Math.min(Math.abs(offset) / targetElement.offsetWidth, 1);
+        const xConfidence = Math.min(Math.abs(offsetX) / targetElement.offsetWidth, 1);
+        const yConfidence = Math.min(Math.abs(offsetY) / targetElement.offsetHeight, 1);
+
+        return Math.max(xConfidence, yConfidence);
       },
-      minThrowOutDistance: 900    // default value is 400
+      minThrowOutDistance: 200    // default value is 400
     };
 
     this.cards = [
