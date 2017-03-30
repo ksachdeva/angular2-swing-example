@@ -1,15 +1,13 @@
 # angular2-swing-example
-Example of how to use Swing in angular 2 application
-
-# Install require global applications
-- npm install -g typings
-- npm install -g typescript
+Example of how to use Swing in Angular application
 
 # Install local dependencies
-npm install
+`npm install`
+OR
+`yarn`
 
 # Run the application
-npm start
+`npm start`
 
 # Example
 

@@ -6,32 +6,16 @@ import {
   Card,
   ThrowEvent,
   DragEvent,
+  Direction,
   SwingStackComponent,
   SwingCardComponent} from 'angular2-swing';
 
 @Component({
-  selector: 'app',
-  template: `
-    <div id="viewport">
-      <ul class="stack" swing-stack  [stackConfig]="stackConfig"  #myswing1 (throwout)="onThrowOut($event)">
-        <li swing-card #mycards1 [ngClass]="c.name" *ngFor="let c of cards">{{ c.symbol }}</li>
-      </ul>
-    </div>
-    <div id="source">
-        <p>Drag the playing cards out of the stack and let go. Dragging them
-          beyond the desk will throw them out of the stack. If you drag too
-          little and let go, the cards will spring back into place. You can
-          throw cards back into the stack after you have thrown them out.</p>
-        <p>Open the <a href="https://developer.chrome.com/devtools/docs/console">
-          Console</a> to view the associated events.<p>
-        <p>Demonstration of <a href="https://github.com/ksachdeva/angular2-swing">
-          https://github.com/ksachdeva/angular2-swing</a> implementation.</p>
-    </div>
-
-  `
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-
   @ViewChild('myswing1') swingStack: SwingStackComponent;
   @ViewChildren('mycards1') swingCards: QueryList<SwingCardComponent>;
 
@@ -41,12 +25,19 @@ export class AppComponent {
   constructor() {
 
     this.stackConfig = {
-      throwOutConfidence: (offset: number, targetElement: HTMLElement) => {
+      allowedDirections: [
+        Direction.LEFT,
+        Direction.DOWN
+      ],
+      throwOutConfidence: (offsetX: number, offsetY: number, targetElement: HTMLElement) => {
         // you would put ur logic based on offset & targetelement to determine
         // what is your throwout confidence
-        return 1;
+        const xConfidence = Math.min(Math.abs(offsetX) / targetElement.offsetWidth, 1);
+        const yConfidence = Math.min(Math.abs(offsetY) / targetElement.offsetHeight, 1);
+
+        return Math.max(xConfidence, yConfidence);
       },
-      minThrowOutDistance: 700    // default value is 400
+      minThrowOutDistance: 900    // default value is 400
     };
 
     this.cards = [
@@ -86,4 +77,5 @@ export class AppComponent {
   onThrowOut(event: ThrowEvent) {
     console.log('Hook from the template', event.throwDirection);
   }
+
 }
