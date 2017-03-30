@@ -37,7 +37,7 @@ export class AppComponent {
 
         return Math.max(xConfidence, yConfidence);
       },
-      minThrowOutDistance: 200    // default value is 400
+      minThrowOutDistance: 900    // default value is 400
     };
 
     this.cards = [
